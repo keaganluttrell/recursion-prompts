@@ -57,16 +57,16 @@ var range = function (x, y) {
     return [];
 
   } else if (y - x > 1 && y > x) {
-    return [++x].concat(range(x, y));
+    return [x += 1].concat(range(x, y));
 
   } else if (x - y < -1 && y < 0 && x < 0) {
-    return [++x].concat(range(x, y));
+    return [x += 1].concat(range(x, y));
 
   } else if (x - y > 1 && y < 0) {
-    return [--x].concat(range(x, y));
+    return [x -= 1].concat(range(x, y));
 
   } else if (x - y > 1 && y > 0) {
-    return [--x].concat(range(x, y));
+    return [x -= 1].concat(range(x, y));
   }
 };
 
@@ -225,7 +225,16 @@ var createArray = function (str) {
 };
 
 // 17. Reverse the order of an array
+// this method does not mutate original array
+// could use pop() and reverseArr(array), but it would mutate
 var reverseArr = function (array) {
+  if (array.length === 0) {
+    return [];
+  }
+  var l = array.length;
+  var last = array.slice(l - 1);
+  var slicedArr = array.slice(0, l - 1)
+  return [...last].concat(...reverseArr(slicedArr));
 };
 
 // 18. Create a new array with a given value and length.
